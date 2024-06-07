@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 # Acceleration in pixels/sec^2
-@export var acceleration = 5.0
+@export var acceleration = 20.0
 # Maximum velocity in pixels/sec
-@export var max_velocity = 50.0
+@export var max_velocity = 1000.0
+# Maximum rotation speed in radians/sec
+@export var max_rotation_speed = PI/8
 # Toggled by HUD element to enable deacceleration
 var counter_thrusters = true
 
@@ -34,7 +36,7 @@ func _physics_process(delta):
 		impulse = impulse.normalized() * acceleration
 		
 		# Get our velocity by adding impulse to our current velocity and capping it at a certain value
-		var temp_velocity = Vector2(velocity + impulse).limit_length(max_velocity)
+		velocity = Vector2(velocity + impulse).limit_length(max_velocity)
 	
 	if impulse.length() == 0 && velocity != Vector2.ZERO && counter_thrusters:
 		# Get the negative direction of our velocity and apply our acceleration to it
@@ -45,6 +47,8 @@ func _physics_process(delta):
 		# If we've decelerated past the ZERO vector, set it to the ZERO vector instead
 		if temp_velocity.normalized() == -velocity.normalized():
 			velocity = Vector2.ZERO
+		else:
+			velocity = temp_velocity
 	
 	# Move the character according to the physics processor
 	var motion = velocity * delta
