@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dpyagn7qyebap"]
+
+[node name="MainWorld" type="Node"]
+
+[node name="Starjunk" type="CanvasLayer" parent="."]
+
+[node name="Space" type="CanvasLayer" parent="."]
