@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjc0ihq0bk88q"]
+
+[ext_resource type="Script" path="res://scenes/objects/bullet/bullet.gd" id="1_16n3o"]
+[ext_resource type="Texture2D" uid="uid://bjn60bq436rbd" path="res://resources/art/laser/laser.png" id="2_xq4gm"]
+[ext_resource type="PackedScene" uid="uid://cm0okvryfpk4e" path="res://scenes/handlers/projectile_handler/projectile_handler.tscn" id="4_dxmi2"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ne251"]
+radius = 6.0
+height = 46.0
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource("1_16n3o")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.57177
+texture = ExtResource("2_xq4gm")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-0.000823055, -0.158975)
+rotation = 1.57177
+scale = Vector2(1.0841, 2.7)
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ProjectileHandler" parent="." instance=ExtResource("4_dxmi2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+rotation = 1.57177
+shape = SubResource("CapsuleShape2D_ne251")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

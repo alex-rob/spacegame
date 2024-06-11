@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://j0alv43beoog"]
+
+[ext_resource type="Script" path="res://scenes/handlers/bullet_emitter/bullet_emitter.gd" id="1_1wrsp"]
+
+[node name="BulletEmitter" type="Marker2D"]
+script = ExtResource("1_1wrsp")
+
+[node name="FireRateTimer" type="Timer" parent="."]
+wait_time = 0.5

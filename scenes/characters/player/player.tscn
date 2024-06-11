@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwqk1v8wrk31f"]
+
+[ext_resource type="Script" path="res://scenes/characters/player/player.gd" id="1_6wjtd"]
+[ext_resource type="Texture2D" uid="uid://dadycwbds43ky" path="res://resources/art/player/player.png" id="2_x4xuh"]
+[ext_resource type="PackedScene" uid="uid://sw622hpicigm" path="res://scenes/handlers/ship_component/ship_component.tscn" id="3_b4ovl"]
+[ext_resource type="PackedScene" uid="uid://j0alv43beoog" path="res://scenes/handlers/bullet_emitter/bullet_emitter.tscn" id="4_pt3nr"]
+[ext_resource type="PackedScene" uid="uid://cjc0ihq0bk88q" path="res://scenes/objects/bullet/bullet.tscn" id="5_b287a"]
+
+[node name="Player" type="CharacterBody2D" groups=["friendly"]]
+scale = Vector2(0.5, 0.5)
+motion_mode = 1
+script = ExtResource("1_6wjtd")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_x4xuh")
+
+[node name="CollisionArea" type="CollisionPolygon2D" parent="."]
+rotation = 1.5708
+polygon = PackedVector2Array(0, -130, 160, 130, 0, 35, -160, 130)
+
+[node name="ShipComponent" parent="." instance=ExtResource("3_b4ovl")]
+
+[node name="BulletEmitter" parent="." instance=ExtResource("4_pt3nr")]
+position = Vector2(120, 0)
+base_bullet = ExtResource("5_b287a")
+
+[connection signal="shoot" from="." to="BulletEmitter" method="fire_bullet"]
